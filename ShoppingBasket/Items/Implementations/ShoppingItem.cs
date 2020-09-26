@@ -8,29 +8,13 @@ namespace ShoppingBasket
         public long Id { get; }
         public string Name { get; }
         public IEnumerable<ITaxRule> TaxRules { get; }
+        public decimal UnitPrice { get; set; }
 
-        public event EventHandler<ShoppingUpdatedEventArgs> Updated;
-
-        public ShoppingItem(long id, string name)
+        public ShoppingItem(long id, string name, decimal unitPrice)
         {
             Id = id;
             Name = name;
-        }
-
-        void TriggerShoppingItemUpdate(IShoppingItem item)
-        {
-            //Map item to Event Args
-
-            //Do something before event
-
-            OnShoppingItemUpdated(null);
-
-            //Do something after event
-        }
-
-        protected virtual void OnShoppingItemUpdated(ShoppingUpdatedEventArgs e)
-        {
-            Updated?.Invoke(this, e);
+            UnitPrice = unitPrice;
         }
     }
 }

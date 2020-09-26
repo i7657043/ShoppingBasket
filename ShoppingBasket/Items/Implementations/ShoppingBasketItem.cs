@@ -9,10 +9,10 @@ namespace ShoppingBasket
         public int Quantity 
         { 
             get => quantity; 
-            set 
+            set
             {
-                quantity = value; 
-                OnShoppingBasketItemUpdated(new ShoppingUpdatedEventArgs(this));
+                quantity = value;
+                Updated?.Invoke(this, new ShoppingUpdatedEventArgs(this));
             } 
         }
 
@@ -20,9 +20,10 @@ namespace ShoppingBasket
         public string Name { get; }
         public IEnumerable<ITaxRule> TaxRules { get; }
 
-        public decimal SubTotal { get; }
+        public decimal SubTotal { get => UnitPrice * Quantity; }
         public decimal Tax { get; }
-        public decimal Total { get => SubTotal * Quantity; }
+        public decimal Total { get => SubTotal + Tax; }
+        public decimal UnitPrice { get; }
 
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
 
@@ -31,14 +32,7 @@ namespace ShoppingBasket
             Id = id;
             Name = name;
             Quantity = 0;
-            SubTotal = unitPrice;
-        }
-
-        protected virtual void OnShoppingBasketItemUpdated(ShoppingUpdatedEventArgs e)
-        {
-            Updated?.Invoke(this, e);
+            UnitPrice = unitPrice;
         }
     }
-
-
 }

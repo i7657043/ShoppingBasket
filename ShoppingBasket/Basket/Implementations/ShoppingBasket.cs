@@ -11,9 +11,9 @@ namespace ShoppingBasket
         private List<IShoppingBasketItem> items { get; set; } = new List<IShoppingBasketItem>();
 
         public IEnumerable<IShoppingBasketItem> Items { get => items; }
-        public decimal SubTotal { get; }
+        public decimal SubTotal { get => items.Sum(x => x.SubTotal); }
         public decimal Tax { get; }
-        public decimal Total { get => items.Sum(x => x.Total); }
+        public decimal Total { get => SubTotal + Tax; }
 
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
 
@@ -41,11 +41,16 @@ namespace ShoppingBasket
 
         public IShoppingBasketItem AddItem(IShoppingItem item, int quantity = 1)
         {
-            //Get Price from pricing service here
-            decimal itemPrice = 0;
-            IShoppingBasketItem basketItem = items.AddItemToBasket(item, itemPrice);
+            if (quantity == 0)
+                throw new ArgumentOutOfRangeException(nameof(quantity), "The quantity of any Shopping-Basket Item cannot be less than 0");
 
-            basketItem.Updated += _alertService.OnItemUpdated;
+            IShoppingBasketItem basketItem = items.FirstOrDefault(x => x.Id == item.Id);
+            if (basketItem == null)
+            {
+                basketItem = new ShoppingBasketItem(item.Id, item.Name, item.UnitPrice);
+                items.Add(basketItem);
+                basketItem.Updated += _alertService.OnItemUpdated;
+            }
 
             basketItem.Quantity += quantity;
 

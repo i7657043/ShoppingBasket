@@ -10,15 +10,16 @@ namespace ShoppingBasket
 
             IShoppingBasket basket = new ShoppingBasket(new AlertService());
 
-            IShoppingItem hamItem = new ShoppingItem(1001, "Ham");
-            IShoppingItem fishItem = new ShoppingItem(1002, "Fish");
+            IShoppingItem hamItem = new ShoppingItem(1001, "Ham", 1);
+            IShoppingItem fishItem = new ShoppingItem(1002, "Fish", 2);
 
             IShoppingBasketItem hamBasketItem = basket.AddItem(hamItem);
-            hamItem = basket.AddItem(hamItem);
+            basket.AddItem(hamItem, 2);
+
             IShoppingBasketItem fishBasketItem = basket.AddItem(fishItem);
 
-            hamItem = basket.RemoveItem(hamBasketItem);
-            fishItem = basket.RemoveItem(fishBasketItem);
+            basket.RemoveItem(hamBasketItem);
+            basket.RemoveItem(fishBasketItem);
 
             Console.WriteLine("Finished Shopping Basket Challenge");
         }
