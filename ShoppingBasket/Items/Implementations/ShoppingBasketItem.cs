@@ -26,13 +26,13 @@ namespace ShoppingBasket
 
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
 
-        public ShoppingBasketItem(long id, string name, decimal unitPrice, IEnumerable<ITaxRule> taxRules)
+        public ShoppingBasketItem(long id, string name, decimal unitPrice, IEnumerable<ITaxRule> taxRules, int quantity = 1)
         {
             Id = id;
             Name = name;
-            Quantity = 0;
             UnitPrice = unitPrice;
             TaxRules = taxRules;
+            Quantity = quantity;
         }
 
         private decimal CalculateTax()

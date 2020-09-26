@@ -41,22 +41,20 @@ namespace ShoppingBasket
 
         public IShoppingBasketItem AddItem(IShoppingItem item, int quantity = 1)
         {
-            if (quantity == 0)
-                throw new ArgumentOutOfRangeException(nameof(quantity), "The quantity of any Shopping-Basket Item cannot be less than 0");
+            ValidateQuantity(quantity);
 
             IShoppingBasketItem basketItem = items.FirstOrDefault(x => x.Id == item.Id);
             if (basketItem == null)
             {
-                basketItem = new ShoppingBasketItem(item.Id, item.Name, item.UnitPrice, item.TaxRules);
-                items.Add(basketItem);
+                basketItem = items.AddItemTobasket(item, quantity);
 
                 basketItem.Updated += _alertService.OnItemUpdated;
             }
-
-            basketItem.Quantity += quantity;
+            else
+                basketItem.Quantity += quantity;           
 
             TriggerBasketUpdate(basketItem, ShoppingUpdatedEventType.Add);
-                        
+
             return basketItem;
         }
 
@@ -67,6 +65,12 @@ namespace ShoppingBasket
             TriggerBasketUpdate(basketItem, ShoppingUpdatedEventType.Remove);
 
             return basketItem;
+        }
+
+        private static void ValidateQuantity(int quantity)
+        {
+            if (quantity == 0)
+                throw new ArgumentOutOfRangeException(nameof(quantity), "The quantity of any Shopping-Basket Item cannot be less than 0");
         }
     }
 }
