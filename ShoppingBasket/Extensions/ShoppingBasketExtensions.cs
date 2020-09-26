@@ -7,12 +7,12 @@ namespace ShoppingBasket
 {
     public static class ShoppingBasketExtensions
     {
-        public static IShoppingBasketItem AddItemToBasket(this List<IShoppingBasketItem> items, IShoppingItem item)
+        public static IShoppingBasketItem AddItemToBasket(this List<IShoppingBasketItem> items, IShoppingItem item, decimal unitPrice)
         {
             IShoppingBasketItem basketItem = items.FirstOrDefault(x => x.Id == item.Id);
             if (basketItem == null)
             {
-                basketItem = new ShoppingBasketItem(item.Id, item.Name);
+                basketItem = new ShoppingBasketItem(item.Id, item.Name, unitPrice);
                 items.Add(basketItem);
             }
 

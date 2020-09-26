@@ -13,7 +13,7 @@ namespace ShoppingBasket
         public IEnumerable<IShoppingBasketItem> Items { get => items; }
         public decimal SubTotal { get; }
         public decimal Tax { get; }
-        public decimal Total { get; }
+        public decimal Total { get => items.Sum(x => x.Total); }
 
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
 
@@ -41,7 +41,9 @@ namespace ShoppingBasket
 
         public IShoppingBasketItem AddItem(IShoppingItem item, int quantity = 1)
         {
-            IShoppingBasketItem basketItem = items.AddItemToBasket(item);
+            //Get Price from pricing service here
+            decimal itemPrice = 0;
+            IShoppingBasketItem basketItem = items.AddItemToBasket(item, itemPrice);
 
             basketItem.Updated += _alertService.OnItemUpdated;
 

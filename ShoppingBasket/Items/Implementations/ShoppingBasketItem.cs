@@ -22,15 +22,16 @@ namespace ShoppingBasket
 
         public decimal SubTotal { get; }
         public decimal Tax { get; }
-        public decimal Total { get; }
+        public decimal Total { get => SubTotal * Quantity; }
 
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
 
-        public ShoppingBasketItem(long id, string name)
+        public ShoppingBasketItem(long id, string name, decimal unitPrice)
         {
             Id = id;
             Name = name;
             Quantity = 0;
+            SubTotal = unitPrice;
         }
 
         protected virtual void OnShoppingBasketItemUpdated(ShoppingUpdatedEventArgs e)
