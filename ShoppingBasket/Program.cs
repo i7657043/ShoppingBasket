@@ -7,14 +7,15 @@ namespace ShoppingBasket
         static void Main(string[] args)
         {
             Console.WriteLine("Started Shopping Basket Challenge...\n");
-            
-            IShoppingBasket basket = new ShoppingBasket();
 
-            IShoppingBasketItem item = basket.AddItem(new ShoppingItem(1001, "Ham"));
-            item = basket.AddItem(new ShoppingItem(1001, "Ham"));
+            IShoppingBasket basket = new ShoppingBasket(new AlertService());
 
-            item = basket.RemoveItem(item);
-            item = basket.RemoveItem(item);
+            IShoppingBasketItem hamItem = basket.AddItem(new ShoppingItem(1001, "Ham"));
+            hamItem = basket.AddItem(new ShoppingItem(1001, "Ham"));
+            IShoppingBasketItem fishItem = basket.AddItem(new ShoppingItem(1002, "Fish"));
+
+            hamItem = basket.RemoveItem(hamItem);
+            fishItem = basket.RemoveItem(fishItem);
 
             Console.WriteLine("Finished Shopping Basket Challenge");
         }

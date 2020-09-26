@@ -6,40 +6,31 @@ namespace ShoppingBasket
 {
     public class ShoppingBasket : IShoppingBasket
     {
-        public IEnumerable<IShoppingBasketItem> Items { get => _items; }
-        private List<IShoppingBasketItem> _items { get; set; } = new List<IShoppingBasketItem>();
+        private readonly IAlertService _alertService;
 
+        private List<IShoppingBasketItem> items { get; set; } = new List<IShoppingBasketItem>();
+
+        public IEnumerable<IShoppingBasketItem> Items { get => items; }
         public decimal SubTotal { get; }
         public decimal Tax { get; }
         public decimal Total { get; }
 
-        //Other classes just need to subscribe to this event
-        //and implement what they want to happen when they get the event
-        //as all this class is doing is triggering it
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
 
-        public ShoppingBasket()
+        public ShoppingBasket(IAlertService alertService)
         {
+            _alertService = alertService;
 
+            Updated += _alertService.OnBasketUpdated;
         }
 
-        public void OnItemUpdate(object sender, ShoppingUpdatedEventArgs e)
+        void TriggerBasketUpdate(IShoppingBasketItem item, ShoppingUpdatedEventType eventType)
         {
-            Console.WriteLine($"Item level Alert");
-        }
-
-        void TriggerBasketUpdate(IShoppingItem item)
-        {
-            //Map item to Event Args
-
-            //Do something before event
-
-            //IShoppingBasketItem bi = item as IShoppingBasketItem;
-            //bi.Updated += OnItemUpdate;
-
-            OnBasketUpdated(new ShoppingUpdatedEventArgs());
-
-            //Do something after event
+            OnBasketUpdated(new ShoppingUpdatedEventArgs 
+            { 
+                BasketItem = item,
+                EventType = eventType 
+            });
         }
 
         protected virtual void OnBasketUpdated(ShoppingUpdatedEventArgs e)
@@ -49,19 +40,29 @@ namespace ShoppingBasket
 
         public IShoppingBasketItem AddItem(IShoppingItem item)
         {
-            //this.TriggerBasketUpdate(item);
-
-            return _items.AddItemToBasket(item);
+            return AddItem(item, 1);
         }        
 
         public IShoppingBasketItem AddItem(IShoppingItem item, int quantity = 1)
         {
-            return _items.AddItemToBasket(item, quantity);
+            IShoppingBasketItem basketItem = items.AddItemToBasket(item);
+
+            basketItem.Updated += _alertService.OnItemUpdated;
+
+            basketItem.Quantity += quantity;
+
+            TriggerBasketUpdate(basketItem, ShoppingUpdatedEventType.Add);
+
+            return basketItem;
         }
 
         public IShoppingBasketItem RemoveItem(IShoppingBasketItem item)
         {
-            return _items.RemoveItemFromBasket(item);
+            IShoppingBasketItem basketItem = items.RemoveItemFromBasket(item);
+
+            TriggerBasketUpdate(basketItem, ShoppingUpdatedEventType.Remove);
+
+            return basketItem;
         }
     }
 }

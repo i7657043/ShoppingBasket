@@ -5,7 +5,16 @@ namespace ShoppingBasket
 {
     public class ShoppingBasketItem : IShoppingBasketItem
     {
-        public int Quantity { get; set; }
+        private int quantity;
+        public int Quantity 
+        { 
+            get => quantity; 
+            set 
+            {
+                quantity = value; 
+                OnShoppingBasketItemUpdated(new ShoppingUpdatedEventArgs { BasketItem = this });
+            } 
+        }
 
         public long Id { get; }
         public string Name { get; }
@@ -17,22 +26,11 @@ namespace ShoppingBasket
 
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
 
-        public ShoppingBasketItem(long id, string name, int quantity = 1)
+        public ShoppingBasketItem(long id, string name)
         {
             Id = id;
             Name = name;
-            Quantity = quantity;
-        }
-
-        void TriggerShoppingBasketItemUpdate(IShoppingItem item)
-        {
-            //Map item to Event Args
-
-            //Do something before event
-
-            OnShoppingBasketItemUpdated(new ShoppingUpdatedEventArgs());
-
-            //Do something after event
+            Quantity = 0;
         }
 
         protected virtual void OnShoppingBasketItemUpdated(ShoppingUpdatedEventArgs e)
