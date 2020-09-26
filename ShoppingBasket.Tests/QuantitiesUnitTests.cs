@@ -7,24 +7,22 @@ namespace ShoppingBasket.Tests
 {
     public class QuantitiesUnitTests
     {
-        [Fact]
-        public void Adding_An_Item_Without_An_Explicit_Quantity_Results_In_A_Quantity_Of_1_For_The_Item()
+        [Theory]
+        [InlineData(1001, "Ham")]
+        public void Adding_An_Item_Without_An_Explicit_Quantity_Results_In_A_Quantity_Of_1_For_The_Item(int itemId, string itemName)
         {
             //Arrange
             IShoppingBasket basket = new ShoppingBasket(new AlertService());
 
-            int itemId = 1001;
-
-            IShoppingItem item = new ShoppingItem(itemId, "Ham");
+            IShoppingItem item = new ShoppingItem(itemId, itemName);
 
             //Act
-            IShoppingBasketItem hamItem = basket.AddItem(new ShoppingItem(1001, "Ham"));
+            basket.AddItem(item);
 
             //Assert
-            List<IShoppingBasketItem> basketItems = (List<IShoppingBasketItem>) basket.Items;
+            List<IShoppingBasketItem> basketItems = basket.Items as List<IShoppingBasketItem>;
 
-            basketItems.FirstOrDefault(x => x.Id == itemId).Quantity.Should().Be(1);
-            
+            basketItems.FirstOrDefault(x => x.Id == itemId).Quantity.Should().Be(1);            
         }
 
         [Fact]
