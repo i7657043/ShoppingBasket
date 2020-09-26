@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 
 namespace ShoppingBasket
 {
@@ -16,18 +15,18 @@ namespace ShoppingBasket
             switch (e.EventType)
             {
                 case ShoppingUpdatedEventType.Add:
-                    Console.WriteLine($"Item Added to Basket: {JsonConvert.SerializeObject(e.BasketItem, Formatting.Indented)}\n");
+                    Console.WriteLine($"Item: {e.BasketItem.Id}-[{e.BasketItem.Name}] Added to Basket, Quantity now = {e.BasketItem.Quantity}");
                     break;
 
                 case ShoppingUpdatedEventType.Remove:
-                    Console.WriteLine($"Item Removed from Basket: {JsonConvert.SerializeObject(e.BasketItem, Formatting.Indented)}\n");
+                    Console.WriteLine($"Item: {e.BasketItem.Id}-[{e.BasketItem.Name}] Removed from Basket, Quantity now = {e.BasketItem.Quantity}");
                     break;
             }
         }
 
         public void OnItemUpdated(object sender, ShoppingUpdatedEventArgs e)
         {
-            Console.WriteLine($"{e.BasketItem.Quantity} of the following Item: {e.BasketItem.Id}-[{e.BasketItem.Name}] is being updated\n");
+            Console.WriteLine($"Item: {e.BasketItem.Id}-[{e.BasketItem.Name}] Quantity in Basket changing to: {e.BasketItem.Quantity}");
         }
     }
 }

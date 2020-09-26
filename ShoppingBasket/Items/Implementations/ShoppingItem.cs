@@ -10,11 +10,12 @@ namespace ShoppingBasket
         public IEnumerable<ITaxRule> TaxRules { get; }
         public decimal UnitPrice { get; set; }
 
-        public ShoppingItem(long id, string name, decimal unitPrice)
+        public ShoppingItem(long id, string name, decimal unitPrice, IEnumerable<ITaxRule> taxRules = null)
         {
             Id = id;
             Name = name;
             UnitPrice = unitPrice;
+            TaxRules = taxRules;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ShoppingBasket
 {
@@ -10,8 +11,8 @@ namespace ShoppingBasket
 
             IShoppingBasket basket = new ShoppingBasket(new AlertService());
 
-            IShoppingItem hamItem = new ShoppingItem(1001, "Ham", 1);
-            IShoppingItem fishItem = new ShoppingItem(1002, "Fish", 2);
+            IShoppingItem hamItem = new ShoppingItem(1001, "Ham", 1, new List<ITaxRule>() { TaxRules.NoTax });
+            IShoppingItem fishItem = new ShoppingItem(1002, "Fish", 2, new List<ITaxRule>() { TaxRules.NoTax });
 
             IShoppingBasketItem hamBasketItem = basket.AddItem(hamItem);
             basket.AddItem(hamItem, 2);

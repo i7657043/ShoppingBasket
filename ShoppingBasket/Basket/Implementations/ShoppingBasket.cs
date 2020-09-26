@@ -9,10 +9,10 @@ namespace ShoppingBasket
         private readonly IAlertService _alertService;
 
         private List<IShoppingBasketItem> items { get; set; } = new List<IShoppingBasketItem>();
-
         public IEnumerable<IShoppingBasketItem> Items { get => items; }
+
         public decimal SubTotal { get => items.Sum(x => x.SubTotal); }
-        public decimal Tax { get; }
+        public decimal Tax { get => items.Sum(x => x.Tax); }
         public decimal Total { get => SubTotal + Tax; }
 
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
@@ -47,15 +47,16 @@ namespace ShoppingBasket
             IShoppingBasketItem basketItem = items.FirstOrDefault(x => x.Id == item.Id);
             if (basketItem == null)
             {
-                basketItem = new ShoppingBasketItem(item.Id, item.Name, item.UnitPrice);
+                basketItem = new ShoppingBasketItem(item.Id, item.Name, item.UnitPrice, item.TaxRules);
                 items.Add(basketItem);
+
                 basketItem.Updated += _alertService.OnItemUpdated;
             }
 
             basketItem.Quantity += quantity;
 
             TriggerBasketUpdate(basketItem, ShoppingUpdatedEventType.Add);
-
+                        
             return basketItem;
         }
 
