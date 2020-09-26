@@ -12,7 +12,7 @@ namespace ShoppingBasket
             set 
             {
                 quantity = value; 
-                OnShoppingBasketItemUpdated(new ShoppingUpdatedEventArgs { BasketItem = this });
+                OnShoppingBasketItemUpdated(new ShoppingUpdatedEventArgs(this));
             } 
         }
 

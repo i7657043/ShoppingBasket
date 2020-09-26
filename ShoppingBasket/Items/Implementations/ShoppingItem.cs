@@ -23,7 +23,7 @@ namespace ShoppingBasket
 
             //Do something before event
 
-            OnShoppingItemUpdated(new ShoppingUpdatedEventArgs());
+            OnShoppingItemUpdated(null);
 
             //Do something after event
         }

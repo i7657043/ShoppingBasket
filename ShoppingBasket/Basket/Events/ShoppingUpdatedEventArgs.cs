@@ -6,6 +6,11 @@ namespace ShoppingBasket
     {
         public IShoppingBasketItem BasketItem { get; set; }
         public ShoppingUpdatedEventType EventType { get; set; }
+
+        public ShoppingUpdatedEventArgs(IShoppingBasketItem basketItem)
+        {
+            BasketItem = basketItem;
+        }
     }
 
     public enum ShoppingUpdatedEventType

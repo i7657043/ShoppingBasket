@@ -26,11 +26,7 @@ namespace ShoppingBasket
 
         void TriggerBasketUpdate(IShoppingBasketItem item, ShoppingUpdatedEventType eventType)
         {
-            OnBasketUpdated(new ShoppingUpdatedEventArgs 
-            { 
-                BasketItem = item,
-                EventType = eventType 
-            });
+            OnBasketUpdated(new ShoppingUpdatedEventArgs(item) { EventType = eventType });
         }
 
         protected virtual void OnBasketUpdated(ShoppingUpdatedEventArgs e)
