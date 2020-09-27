@@ -1,7 +1,10 @@
-﻿using System;
+﻿using ShoppingBasketChallenge.Discounts;
+using ShoppingBasketChallenge.Totals;
+using ShoppingBasketChallenge.Updated;
+using System;
 using System.Collections.Generic;
 
-namespace ShoppingBasket
+namespace ShoppingBasketChallenge.Items
 {
     public class ShoppingBasketItem : IShoppingBasketItem
     {
@@ -53,8 +56,9 @@ namespace ShoppingBasket
         {
             decimal discount = 0;
 
-            foreach (IDiscountRule discountRule in DiscountRules)
-                discount += discountRule.CalculateDiscount(this); //null doesn't seem ideal here
+            if (DiscountRules != null)
+                foreach (IDiscountRule discountRule in DiscountRules)
+                    discount += discountRule.CalculateDiscount(this);
 
             return discount;
         }

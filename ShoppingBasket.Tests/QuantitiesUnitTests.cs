@@ -1,11 +1,13 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
+using ShoppingBasketChallenge.Basket;
+using ShoppingBasketChallenge.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace ShoppingBasket.Tests
+namespace ShoppingBasketChallenge.Tests
 {
     public class QuantitiesUnitTests : IClassFixture<IocFixture>
     {

@@ -1,4 +1,7 @@
-﻿namespace ShoppingBasket
+﻿using ShoppingBasketChallenge.Basket;
+using ShoppingBasketChallenge.Items;
+
+namespace ShoppingBasketChallenge.Totals
 {
     public class ItemSubTotalPercentageTaxRule : ITaxRule
     {
@@ -7,14 +10,6 @@
         public decimal CalculateTax(IShoppingBasket basket, IShoppingBasketItem item)
         {
             return item.SubTotal * 0M; //Add 0% - NoTax Rule from Rules.md
-        }
-    }
-
-    public class VatAs20PercentTaxRule : ITaxRule
-    {
-        public decimal CalculateTax(IShoppingBasket basket, IShoppingBasketItem item)
-        {
-            return item.SubTotal * 0.20M; //Add 20%
         }
     }
 }

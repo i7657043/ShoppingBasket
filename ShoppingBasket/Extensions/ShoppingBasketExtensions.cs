@@ -1,9 +1,10 @@
-﻿using System;
+﻿using ShoppingBasketChallenge.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ShoppingBasket
+namespace ShoppingBasketChallenge.Extensions
 {
     public static class ShoppingBasketExtensions
     {

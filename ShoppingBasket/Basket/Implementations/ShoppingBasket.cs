@@ -1,8 +1,13 @@
-﻿using System;
+﻿using ShoppingBasketChallenge.Alerts;
+using ShoppingBasketChallenge.Extensions;
+using ShoppingBasketChallenge.Items;
+using ShoppingBasketChallenge.Totals;
+using ShoppingBasketChallenge.Updated;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ShoppingBasket
+namespace ShoppingBasketChallenge.Basket
 {
     public class ShoppingBasket : IShoppingBasket
     {

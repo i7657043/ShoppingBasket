@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using System.Linq;
+using ShoppingBasketChallenge.Items;
+using ShoppingBasketChallenge.Totals;
+using ShoppingBasketChallenge.Basket;
+using ShoppingBasketChallenge.Discounts;
 
-namespace ShoppingBasket.Tests
+namespace ShoppingBasketChallenge.Tests
 {
     public class TotalsUnitTests : IClassFixture<IocFixture>
     {
@@ -130,10 +134,11 @@ namespace ShoppingBasket.Tests
             IShoppingBasketItem basketItem = basketItems.FirstOrDefault(x => x.Id == itemId);
 
             _basket.Discount.Should().Be(20);
+
             _basket.Total.Should().Be(20);
 
-            basketItem.SubTotal.Should().Be(basketItem.UnitPrice);
-            _basket.SubTotal.Should().Be(basketItem.UnitPrice);
+            basketItem.SubTotal.Should().Be(40);
+            _basket.SubTotal.Should().Be(40);
         }
 
         #endregion

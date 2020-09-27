@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using ShoppingBasketChallenge.Items;
+using ShoppingBasketChallenge.Totals;
+using ShoppingBasketChallenge.Updated;
+using System.Collections.Generic;
 
-namespace ShoppingBasket
+namespace ShoppingBasketChallenge.Basket
 {
     public interface IShoppingBasket : ITotals, IUpdated
     {

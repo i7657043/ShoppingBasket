@@ -136,13 +136,13 @@ The set of tests described above are a bare _minimum_ - in reality there are man
 If you're feeling like you want more, here are some scretch goals to consider implementing / testing around discounts:
 ​
 ​
-* Design an IDiscountRule interface similar to ITaxRule
-* Allow items to define their discounts
-* Provide a property to expose the value of the discount on ITotals
+* Design an IDiscountRule interface similar to ITaxRule - done
+* Allow items to define their discounts - done
+* Provide a property to expose the value of the discount on ITotals - done
 * Possible discount types :
-    * Buy one get one free
+    * Buy one get one free - done
     * Buy item 1 and item 2 together for a discount
-* And of course - lots of test scenarios for the new functionality
+* And of course - lots of test scenarios for the new functionality - done 2 tests
 ​
 ## Implementation
 ​

@@ -1,4 +1,6 @@
-﻿namespace ShoppingBasket
+﻿using ShoppingBasketChallenge.Updated;
+
+namespace ShoppingBasketChallenge.Alerts
 {
     public interface IAlertService
     {

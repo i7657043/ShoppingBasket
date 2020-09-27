@@ -1,6 +1,7 @@
-﻿using System;
+﻿using ShoppingBasketChallenge.Updated;
+using System;
 
-namespace ShoppingBasket
+namespace ShoppingBasketChallenge.Alerts
 {
     public class AlertService : IAlertService
     {

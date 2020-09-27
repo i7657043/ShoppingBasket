@@ -1,6 +1,7 @@
-﻿using System;
+﻿using ShoppingBasketChallenge.Items;
+using System;
 
-namespace ShoppingBasket
+namespace ShoppingBasketChallenge.Updated
 {
     public class ShoppingUpdatedEventArgs : EventArgs
     {
@@ -11,10 +12,5 @@ namespace ShoppingBasket
         {
             BasketItem = basketItem;
         }
-    }
-
-    public enum ShoppingUpdatedEventType
-    {
-        Add = 1, Remove = 2
     }
 }

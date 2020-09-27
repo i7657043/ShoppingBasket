@@ -1,4 +1,4 @@
-﻿namespace ShoppingBasket
+﻿namespace ShoppingBasketChallenge.Totals
 {
     public interface ITotals
     {

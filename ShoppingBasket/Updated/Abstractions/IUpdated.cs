@@ -1,6 +1,7 @@
-﻿using System;
+﻿using ShoppingBasketChallenge.Basket;
+using System;
 
-namespace ShoppingBasket
+namespace ShoppingBasketChallenge.Updated
 {
     public interface IUpdated
     {

@@ -1,4 +1,6 @@
-﻿namespace ShoppingBasket
+﻿using ShoppingBasketChallenge.Items;
+
+namespace ShoppingBasketChallenge.Discounts
 {
     public interface IDiscountRule
     {

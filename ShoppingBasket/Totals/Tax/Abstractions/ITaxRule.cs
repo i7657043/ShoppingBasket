@@ -1,4 +1,7 @@
-﻿namespace ShoppingBasket
+﻿using ShoppingBasketChallenge.Basket;
+using ShoppingBasketChallenge.Items;
+
+namespace ShoppingBasketChallenge.Totals
 {
     public interface ITaxRule
     {

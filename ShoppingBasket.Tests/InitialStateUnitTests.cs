@@ -2,8 +2,10 @@ using FluentAssertions;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
+using ShoppingBasketChallenge.Items;
+using ShoppingBasketChallenge.Basket;
 
-namespace ShoppingBasket.Tests
+namespace ShoppingBasketChallenge.Tests
 {
     public class InitialStateUnitTests : IClassFixture<IocFixture>
     {

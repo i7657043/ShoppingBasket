@@ -1,4 +1,4 @@
-﻿namespace ShoppingBasket
+﻿namespace ShoppingBasketChallenge.Discounts
 {
     public static class DiscountRules
     {

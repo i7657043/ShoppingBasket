@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using ShoppingBasketChallenge.Alerts;
+using ShoppingBasketChallenge.Basket;
 
-namespace ShoppingBasket.Tests
+namespace ShoppingBasketChallenge.Tests
 {
     public class IocFixture
     {

@@ -1,4 +1,4 @@
-﻿namespace ShoppingBasket
+﻿namespace ShoppingBasketChallenge.Totals
 {
     public static class TaxRules
     {
