@@ -10,7 +10,7 @@ namespace ShoppingBasket.Tests
 
             serviceCollection
                 .AddTransient<IShoppingBasket, ShoppingBasket>() //Transient so a fresh Basket is created for each test
-                .AddSingleton<IAlertService, AlertService>(); //Singleton as we can re-use the same instance of the Alert Service throughout execution
+                .AddSingleton<IAlertService, AlertService>();    //Singleton as its more efficient to use the same instance of the Alert Service throughout test execution
 
             ServiceProvider = serviceCollection.BuildServiceProvider();
         }

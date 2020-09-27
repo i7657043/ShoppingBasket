@@ -12,10 +12,21 @@ namespace ShoppingBasket
         public IEnumerable<IShoppingBasketItem> Items { get => items; }
 
         public decimal SubTotal { get => items.Sum(x => x.SubTotal); }
-        public decimal Tax { get => items.Sum(x => x.Tax); }
+        public decimal Tax { get => items.Sum(x => x.Tax); /* CalculateTax();*/ }
         public decimal Total { get => SubTotal + Tax; }
 
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
+
+        private decimal CalculateTax()
+        {
+            decimal tax = 0;
+
+            foreach (IShoppingBasketItem item in Items)
+                foreach (ITaxRule taxRule in item.TaxRules)
+                    tax += taxRule.CalculateTax(this, item);
+
+            return tax;
+        }
 
         public ShoppingBasket(IAlertService alertService)
         {
