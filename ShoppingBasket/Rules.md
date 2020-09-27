@@ -4,17 +4,17 @@
 ​
 Build a shopping basket solution that provides the following facilities:
 ​
-* Add item to cart
-    * With / without quantity (without - assume quantity to be 1)
-* Alter item quantity in cart
-* Remove item from cart
-* Calculate the sub total of each item
-* Calculate the tax total of each item
-* Calculate the grand total inc. tax of each item
-* Calculate sub total of the whole basket
-* Calculate tax total of the whole basket
-* Calculate grand total inc. tax of the whole basket
-* Allow each item to specify their own tax calculation rules
+* Add item to cart  - done
+    * With / without quantity (without - assume quantity to be 1)  - done
+* Alter item quantity in cart - done
+* Remove item from cart - done
+* Calculate the sub total of each item - done
+* Calculate the tax total of each item - done
+* Calculate the grand total inc. tax of each item - done
+* Calculate sub total of the whole basket - done
+* Calculate tax total of the whole basket - done
+* Calculate grand total inc. tax of the whole basket - done
+* Allow each item to specify their own tax calculation rules - done
 ​
 Operations performed against items (update quantity, add, remove, etc.) should cause the basket to update its totals automatically without further operations or methods being called. e.g.
 ​
@@ -114,20 +114,20 @@ Implementation should following a red-green-refactor model using a TDD approach:
 At a _minimum_ you must ensure the following scenarios are covered by your test suite:
 ​
 1. Initial state
-    * A newly constructed basket has 0 items in and totals that are all 0
+    * A newly constructed basket has 0 items in and totals that are all 0 - done
 ​
 2. Quantities
-    * Adding an item without an explicit quantity results in a quantity of 1 for the item
-    * After adding a single item to an empty basket, both the basket and item quantity are 1
-    * After adding two items with different quantities to an empty basket, both the basket and item quantities are correct
-    * After updating the quantity on an item already in a basket, both the basket and item quantities are correct
-    * Adding an item with, or updating an item to a quantity of 0 or less will result in an ArgumentOutOfRangeException being thrown
-    * After adding a single item to the basket, adding the same item again will update the quantity of the previously added item
+    * Adding an item without an explicit quantity results in a quantity of 1 for the item - done
+    * After adding a single item to an empty basket, both the basket and item quantity are 1 - done
+    * After adding two items with different quantities to an empty basket, both the basket and item quantities are correct - done
+    * After updating the quantity on an item already in a basket, both the basket and item quantities are correct - done
+    * Adding an item with, or updating an item to a quantity of 0 or less will result in an ArgumentOutOfRangeException being thrown - done
+    * After adding a single item to the basket, adding the same item again will update the quantity of the previously added item - done
 ​
 3. Totals
-    * After adding a single item to an empty basket, both the subtotal of the item and basket should equal the items unit price
-    * After adding a single item (with a NoTax rule) to an empty basket, both the tax of the item and the basket should equal 0 and both the subtotal of the item and basket should equal the items unit price
-    * After adding two items with different quantities (both with a NoTax rule) to an empty basket, both the tax of the item and the basket should equal 0, both the subtotal and the total of the item and basket should equal the items unit price
+    * After adding a single item to an empty basket, both the subtotal of the item and basket should equal the items unit price - done
+    * After adding a single item (with a NoTax rule) to an empty basket, both the tax of the item and the basket should equal 0 and both the subtotal of the item and basket should equal the items unit price - done
+    * After adding two items with different quantities (both with a NoTax rule) to an empty basket, both the tax of the item and the basket should equal 0, both the subtotal and the total of the item and basket should equal the items unit price - done
 ​
 The set of tests described above are a bare _minimum_ - in reality there are many more scenarios that should be tested. Please consider what you think to be the most important cases and provide additional tests to improve coverage.
 ​
@@ -142,7 +142,7 @@ If you're feeling like you want more, here are some scretch goals to consider im
 * Possible discount types :
     * Buy one get one free - done
     * Buy item 1 and item 2 together for a discount
-* And of course - lots of test scenarios for the new functionality - done 2 tests
+* And of course - lots of test scenarios for the new functionality - done
 ​
 ## Implementation
 ​
