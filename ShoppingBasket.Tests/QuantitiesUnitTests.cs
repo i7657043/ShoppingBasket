@@ -89,7 +89,7 @@ namespace ShoppingBasket.Tests
             List<IShoppingBasketItem> basketItems = _basket.Items as List<IShoppingBasketItem>;
 
             basketItems.FirstOrDefault(x => x.Id == itemId).Quantity.Should().Be(3);
-            basketItems.Sum(x => x.Quantity).Should().Be(3); //As Basket doesn't have a Quantity property we count the Quantity of individual items
+            basketItems.Sum(x => x.Quantity).Should().Be(3);
         }
 
         [Theory]
@@ -133,7 +133,7 @@ namespace ShoppingBasket.Tests
             List<IShoppingBasketItem> basketItems = _basket.Items as List<IShoppingBasketItem>;
 
             basketItems.FirstOrDefault(x => x.Id == itemId).Quantity.Should().Be(2);
-            basketItems.Sum(x => x.Quantity).Should().Be(2); //As Basket doesn't have a Quantity property we count the Quantity of individual items
+            basketItems.Sum(x => x.Quantity).Should().Be(2);
         }
     }
 }

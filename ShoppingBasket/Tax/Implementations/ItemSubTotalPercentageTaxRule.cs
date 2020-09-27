@@ -8,10 +8,13 @@
         {
             return item.SubTotal * 0M; //Add 0% - NoTax Rule from Rules.md
         }
+    }
 
-        //public decimal CalculateTax(IShoppingBasket basket, IShoppingBasketItem item)
-        //{
-        //    return item.SubTotal * 0.20M; //Add 20%
-        //}
+    public class VatAs20PercentTaxRule : ITaxRule
+    {
+        public decimal CalculateTax(IShoppingBasket basket, IShoppingBasketItem item)
+        {
+            return item.SubTotal * 0.20M; //Add 20%
+        }
     }
 }

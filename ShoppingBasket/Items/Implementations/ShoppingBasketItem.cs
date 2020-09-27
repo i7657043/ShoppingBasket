@@ -19,19 +19,22 @@ namespace ShoppingBasket
         public long Id { get; }
         public string Name { get; }
         public IEnumerable<ITaxRule> TaxRules { get; }
+        public IEnumerable<IDiscountRule> DiscountRules { get; }
         public decimal SubTotal { get => UnitPrice * Quantity; }
         public decimal Tax { get => CalculateTax(); }
-        public decimal Total { get => SubTotal + Tax; }
+        public decimal Total { get => (SubTotal + Tax) - Discount; }
+        public decimal Discount { get => CalculateDiscount(); }
         public decimal UnitPrice { get; }
 
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
 
-        public ShoppingBasketItem(long id, string name, decimal unitPrice, IEnumerable<ITaxRule> taxRules, int quantity = 1)
+        public ShoppingBasketItem(long id, string name, decimal unitPrice, IEnumerable<ITaxRule> taxRules, IEnumerable<IDiscountRule> discountRules, int quantity = 1)
         {
             Id = id;
             Name = name;
             UnitPrice = unitPrice;
             TaxRules = taxRules;
+            DiscountRules = discountRules;
             Quantity = quantity;
         }
 
@@ -39,10 +42,21 @@ namespace ShoppingBasket
         {
             decimal tax = 0;
 
-            foreach (ITaxRule taxRule in TaxRules)
-                tax += taxRule.CalculateTax(null, this); //null doesn't seem ideal here
+            if (TaxRules != null)
+                foreach (ITaxRule taxRule in TaxRules)
+                    tax += taxRule.CalculateTax(null, this); //null doesn't seem ideal here
 
             return tax;
+        }
+
+        private decimal CalculateDiscount()
+        {
+            decimal discount = 0;
+
+            foreach (IDiscountRule discountRule in DiscountRules)
+                discount += discountRule.CalculateDiscount(this); //null doesn't seem ideal here
+
+            return discount;
         }
     }
 }

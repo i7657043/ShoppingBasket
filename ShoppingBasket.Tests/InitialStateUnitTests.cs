@@ -20,7 +20,10 @@ namespace ShoppingBasket.Tests
             //Arrange
             List<IShoppingBasketItem> basketItems = (List<IShoppingBasketItem>) _basket.Items;
 
-            //Act and Assert
+            //Act
+            //In this case the "Act" of constructing a Basket has been done in the constructor
+            
+            //Assert
             basketItems.Count.Should().Be(0);
             _basket.SubTotal.Should().Be(0);
             _basket.Total.Should().Be(0);

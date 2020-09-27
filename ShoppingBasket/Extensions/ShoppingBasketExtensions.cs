@@ -9,7 +9,7 @@ namespace ShoppingBasket
     {
         public static IShoppingBasketItem AddItemTobasket(this List<IShoppingBasketItem> items, IShoppingItem item, int quantity = 1)
         {
-            IShoppingBasketItem basketItem = new ShoppingBasketItem(item.Id, item.Name, item.UnitPrice, item.TaxRules, quantity);
+            IShoppingBasketItem basketItem = new ShoppingBasketItem(item.Id, item.Name, item.UnitPrice, item.TaxRules, item.DiscountRules, quantity);
 
             items.Add(basketItem);
 

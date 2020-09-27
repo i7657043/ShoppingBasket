@@ -13,31 +13,16 @@ namespace ShoppingBasket
 
         public decimal SubTotal { get => items.Sum(x => x.SubTotal); }
         public decimal Tax { get => items.Sum(x => x.Tax); /* CalculateTax();*/ }
-        public decimal Total { get => SubTotal + Tax; }
+        public decimal Total { get => (SubTotal + Tax) - Discount; }
+        public decimal Discount { get => items.Sum(x => x.Discount); }
 
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
-
-        private decimal CalculateTax()
-        {
-            decimal tax = 0;
-
-            foreach (IShoppingBasketItem item in Items)
-                foreach (ITaxRule taxRule in item.TaxRules)
-                    tax += taxRule.CalculateTax(this, item);
-
-            return tax;
-        }
 
         public ShoppingBasket(IAlertService alertService)
         {
             _alertService = alertService;
 
             Updated += _alertService.OnBasketUpdated;
-        }
-
-        void TriggerBasketUpdate(IShoppingBasketItem item, ShoppingUpdatedEventType eventType)
-        {
-            OnBasketUpdated(new ShoppingUpdatedEventArgs(item) { EventType = eventType });
         }
 
         protected virtual void OnBasketUpdated(ShoppingUpdatedEventArgs e)
@@ -62,9 +47,9 @@ namespace ShoppingBasket
                 basketItem.Updated += _alertService.OnItemUpdated;
             }
             else
-                basketItem.Quantity += quantity;           
+                basketItem.Quantity += quantity;
 
-            TriggerBasketUpdate(basketItem, ShoppingUpdatedEventType.Add);
+            OnBasketUpdated(new ShoppingUpdatedEventArgs(basketItem) { EventType = ShoppingUpdatedEventType.Add });
 
             return basketItem;
         }
@@ -73,7 +58,7 @@ namespace ShoppingBasket
         {
             IShoppingBasketItem basketItem = items.RemoveItemFromBasket(item);
 
-            TriggerBasketUpdate(basketItem, ShoppingUpdatedEventType.Remove);
+            OnBasketUpdated(new ShoppingUpdatedEventArgs(basketItem) { EventType = ShoppingUpdatedEventType.Remove });
 
             return basketItem;
         }
@@ -82,6 +67,19 @@ namespace ShoppingBasket
         {
             if (quantity == 0)
                 throw new ArgumentOutOfRangeException(nameof(quantity), "The quantity of any Shopping-Basket Item cannot be less than 0");
+        }
+
+        //Not required as can sum tax of all items in basket
+        private decimal CalculateTax()
+        {
+            decimal tax = 0;
+
+                foreach (IShoppingBasketItem item in Items)
+                if (item.TaxRules != null)
+                    foreach (ITaxRule taxRule in item.TaxRules)
+                        tax += taxRule.CalculateTax(this, item);
+
+            return tax;
         }
     }
 }
