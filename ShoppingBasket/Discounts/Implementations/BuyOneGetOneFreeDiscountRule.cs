@@ -10,21 +10,16 @@ namespace ShoppingBasketChallenge.Discounts
             if (basketItem.Quantity <= 1)
                 return 0;
 
-            if (basketItem.Quantity % 2 == 1)
-            {
-                //Get the discount of the even number of items by removing the odd item and dividing by 2, then add the price of 1 item back on
+            return GetBogofDiscount(basketItem);
+        }
 
-                decimal costOf1 = basketItem.Total / basketItem.Quantity;
-                decimal costWithout1 = basketItem.Total - costOf1;
-                decimal bogofDiscountWithout1 = costWithout1 / 2;
-                decimal totalDiscount = bogofDiscountWithout1 + costOf1;
-
-                return ((basketItem.SubTotal - (basketItem.SubTotal / basketItem.Quantity)) / 2) + (basketItem.SubTotal / basketItem.Quantity);
-            }
-            else
-            {
-                return basketItem.SubTotal / 2;
-            }
+        private static decimal GetBogofDiscount(IShoppingBasketItem basketItem)
+        {
+            //Get the discount for odd quantity by getting the even number of items by removing the odd item and dividing by 2
+            //then adding the price of 1 item back on to get the total
+            return basketItem.Quantity % 2 == 1
+                ? ((basketItem.SubTotal - (basketItem.SubTotal / basketItem.Quantity)) / 2) + (basketItem.SubTotal / basketItem.Quantity)
+                : basketItem.SubTotal / 2;
         }
     }
 }

@@ -15,7 +15,6 @@ namespace ShoppingBasketChallenge.Basket
 
         private List<IShoppingBasketItem> items { get; set; } = new List<IShoppingBasketItem>();
         public IEnumerable<IShoppingBasketItem> Items { get => items; }
-
         public decimal SubTotal { get => items.Sum(x => x.SubTotal); }
         public decimal Tax { get => items.Sum(x => x.Tax); /* CalculateTax();*/ }
         public decimal Total { get => (SubTotal + Tax) - Discount; }
@@ -28,11 +27,6 @@ namespace ShoppingBasketChallenge.Basket
             _alertService = alertService;
 
             Updated += _alertService.OnBasketUpdated;
-        }
-
-        protected virtual void OnBasketUpdated(ShoppingUpdatedEventArgs e)
-        {
-            Updated?.Invoke(this, e);
         }
 
         public IShoppingBasketItem AddItem(IShoppingItem item)
@@ -68,13 +62,18 @@ namespace ShoppingBasketChallenge.Basket
             return basketItem;
         }
 
+        protected virtual void OnBasketUpdated(ShoppingUpdatedEventArgs e)
+        {
+            Updated?.Invoke(this, e);
+        }
+
         private static void ValidateQuantity(int quantity)
         {
             if (quantity == 0)
                 throw new ArgumentOutOfRangeException(nameof(quantity), "The quantity of any Shopping-Basket Item cannot be less than 0");
         }
 
-        //Not required as can sum tax of all items in basket
+        //Not required as can sum tax of all items in basket quicker?
         private decimal CalculateTax()
         {
             decimal tax = 0;
