@@ -1,7 +1,5 @@
 ﻿using ShoppingBasketChallenge.Alerts;
-using ShoppingBasketChallenge.Extensions;
 using ShoppingBasketChallenge.Items;
-using ShoppingBasketChallenge.Totals;
 using ShoppingBasketChallenge.Updated;
 using System;
 using System.Collections.Generic;
@@ -36,17 +34,19 @@ namespace ShoppingBasketChallenge.Basket
 
         public IShoppingBasketItem AddItem(IShoppingItem item, int quantity = 1)
         {
-            ValidateQuantity(quantity);
+            ValidateAddQuantity(quantity);
 
             IShoppingBasketItem basketItem = items.FirstOrDefault(x => x.Id == item.Id);
             if (basketItem == null)
             {
-                basketItem = items.AddItemTobasket(item, quantity);
+                basketItem = new ShoppingBasketItem(item.Id, item.Name, item.UnitPrice, item.TaxRules, item.DiscountRules, quantity);
 
                 basketItem.Updated += _alertService.OnItemUpdated;
+
+                items.Add(basketItem);
             }
-            else
-                basketItem.Quantity += quantity;
+
+            basketItem.Quantity += quantity;
 
             OnBasketUpdated(new ShoppingUpdatedEventArgs(basketItem) { EventType = ShoppingUpdatedEventType.Add });
 
@@ -55,7 +55,12 @@ namespace ShoppingBasketChallenge.Basket
 
         public IShoppingBasketItem RemoveItem(IShoppingBasketItem item)
         {
-            IShoppingBasketItem basketItem = items.RemoveItemFromBasket(item);
+            IShoppingBasketItem basketItem = items.FirstOrDefault(x => x.Id == item.Id);
+
+            ValidateItemFound(basketItem);
+            ValidateRemoveQuantity(basketItem.Quantity);
+
+            basketItem.Quantity--;
 
             OnBasketUpdated(new ShoppingUpdatedEventArgs(basketItem) { EventType = ShoppingUpdatedEventType.Remove });
 
@@ -67,10 +72,21 @@ namespace ShoppingBasketChallenge.Basket
             Updated?.Invoke(this, e);
         }
 
-        private static void ValidateQuantity(int quantity)
+        private static void ValidateAddQuantity(int quantity)
         {
             if (quantity == 0)
-                throw new ArgumentOutOfRangeException(nameof(quantity), "The quantity of any Shopping-Basket Item cannot be less than 0");
+                throw new ArgumentOutOfRangeException(nameof(quantity), "Cannot add an Item with a count of 0");
+        }
+
+        private static void ValidateRemoveQuantity(int quantity)
+        {
+            if ((quantity - 1) < 0)
+                throw new ArgumentOutOfRangeException(nameof(quantity), "The quantity of any Shopping-Basket Item cannot be 0 or less");
+        }
+        private static void ValidateItemFound(IShoppingBasketItem basketItem)
+        {
+            if (basketItem == null)
+                throw new KeyNotFoundException("The Item could not be found in the Basket");
         }
     }
 }

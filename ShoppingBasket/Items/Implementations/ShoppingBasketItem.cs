@@ -39,7 +39,7 @@ namespace ShoppingBasketChallenge.Items
             UnitPrice = unitPrice;
             TaxRules = taxRules;
             DiscountRules = discountRules;
-            Quantity = quantity;
+            Quantity = 0;
         }
     }
 }

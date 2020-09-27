@@ -119,7 +119,7 @@ namespace ShoppingBasketChallenge.Tests
 
             Assert.Throws<ArgumentOutOfRangeException>(() => _basket.RemoveItem(basketItem));
         }
-
+                
         [Theory]
         [InlineData(1001, "Ham", 10)]
         public void After_Adding_A_Single_Item_To_The_Basket_Adding_The_Same_Item_Again_Will_Update_The_Quantity_Of_The_Previously_Added_Item(int itemId, string itemName, decimal itemPrice)
@@ -137,5 +137,25 @@ namespace ShoppingBasketChallenge.Tests
             basketItems.FirstOrDefault(x => x.Id == itemId).Quantity.Should().Be(2);
             basketItems.Sum(x => x.Quantity).Should().Be(2);
         }
+
+        #region  Extended tests using new tax rule and discount rule below
+
+        [Theory]
+        [InlineData(1001, "Ham", 10)] 
+        public void Removing_An_Item_That_Doesnt_Exist_In_The_Basket_Will_Result_In_An_KeyNotFoundException_Being_Thrown(int itemId, string itemName, decimal itemPrice)
+        {
+            //Arrange
+            IShoppingItem item = new ShoppingItem(itemId, itemName, itemPrice);
+
+            //Act And Assert
+            IShoppingBasketItem basketItem = _basket.AddItem(item);
+
+            IShoppingBasketItem itemThatDoesntExistInBasket = new ShoppingBasketItem(itemId + 1, itemName + "1", itemPrice + 1, null, null);
+
+            //Assert
+            Assert.Throws<KeyNotFoundException>(() => _basket.RemoveItem(itemThatDoesntExistInBasket));
+        }
+        
+        #endregion
     }
 }
