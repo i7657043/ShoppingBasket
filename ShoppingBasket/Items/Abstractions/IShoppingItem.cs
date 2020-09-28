@@ -10,6 +10,6 @@ namespace ShoppingBasketChallenge.Items
         string Name { get; }
         IEnumerable<ITaxRule> TaxRules { get; }
         IEnumerable<IDiscountRule> DiscountRules { get; }
-        public decimal UnitPrice { get; }
+        decimal UnitPrice { get; }
     }
 }
